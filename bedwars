@@ -1,0 +1,17 @@
+[
+  {
+    "title": "Script1",
+    "description": "Description of Script 1",
+    "script": "// Script 1 code here"
+  },
+  {
+    "title": "Script2",
+    "description": "Description of Script 2",
+    "script": "// Script 2 code here"
+  },
+  {
+    "title": "Script3",
+    "description": "Description of Script 3",
+    "script": "// Script 3 code here"
+  }
+]
