@@ -3,23 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Example Vercel Project</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Script Search</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input[type=text] {
+            padding: 10px;
+            width: 300px;
+            font-size: 16px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello Vercel!</h1>
-    <p>Click the button to fetch data:</p>
-    <button onclick="fetchData()">Fetch Data</button>
-    <p id="result"></p>
+    <h1>Script Search</h1>
+    <form id="searchForm">
+        <label for="searchInput">Search:</label>
+        <input type="text" id="searchInput" name="searchInput">
+        <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
 
     <script>
-        async function fetchData() {
-            try {
-                const response = await fetch('/api/q?q=test');
-                const data = await response.json();
-                document.getElementById('result').innerText = JSON.stringify(data, null, 2);
-            } catch (error) {
-                console.error('Error fetching data:', error);
+        document.getElementById('searchForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let searchQuery = document.getElementById('searchInput').value.trim().toLowerCase();
+
+            // List of JSON files to fetch
+            let jsonFiles = ['bedwars.json', 'dahood.json', 'arsenal.json']; // Add more JSON files as needed
+
+            let promises = jsonFiles.map(jsonFile => {
+                return fetch(jsonFile)
+                    .then(response => response.json())
+                    .then(data => {
+                        return data.result.scripts.filter(script => {
+                            return script.title.toLowerCase().includes(searchQuery) || 
+                                   script.slug.toLowerCase().includes(searchQuery) ||
+                                   script.game.name.toLowerCase().includes(searchQuery);
+                        });
+                    });
+            });
+
+            Promise.all(promises)
+                .then(results => {
+                    let combinedResults = results.flat(); // Flatten the array of arrays into a single array
+                    displayResults(combinedResults);
+                })
+                .catch(error => console.error('Error fetching JSON:', error));
+        });
+
+        function displayResults(scripts) {
+            let resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            if (scripts.length === 0) {
+                resultsDiv.innerHTML = '<p>No results found.</p>';
+            } else {
+                let ul = document.createElement('ul');
+                scripts.forEach(script => {
+                    let li = document.createElement('li');
+                    li.innerHTML = `
+                        <h3>${script.title}</h3>
+                        <p>Game: ${script.game.name}</p>
+                        <p>Views: ${script.views}</p>
+                        <p>Script Type: ${script.scriptType}</p>
+                        <img src="${script.game.imageUrl}" alt="${script.game.name}">
+                        <p>Script URL: <a href="${script.script}" target="_blank">Click to view</a></p>
+                    `;
+                    ul.appendChild(li);
+                });
+                resultsDiv.appendChild(ul);
             }
         }
     </script>
