@@ -16,7 +16,7 @@ function App() {
         try {
             const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}`);
             const data = await response.json();
-            setSearchResults(data.results);
+            setSearchResults(data.result.scripts); // Assuming 'scripts' contains the array of results
         } catch (error) {
             console.error('Error searching:', error);
         }
@@ -24,7 +24,7 @@ function App() {
 
     return (
         <div>
-            <h1>Search JSON Files</h1>
+            <h1>Search Results</h1>
             <form onSubmit={handleSearchSubmit}>
                 <input
                     type="text"
@@ -37,8 +37,14 @@ function App() {
             <div>
                 {searchResults.length > 0 ? (
                     <ul>
-                        {searchResults.map((result, index) => (
-                            <li key={index}>{result.name}</li> {/* Adjust based on your JSON structure */}
+                        {searchResults.map((script, index) => (
+                            <li key={index}>
+                                <h2>{script.title}</h2>
+                                <p>Game Name: {script.game.name}</p>
+                                <p>Views: {script.views}</p>
+                                {/* Add more details as needed */}
+                                <p>Script: {script.script}</p>
+                            </li>
                         ))}
                     </ul>
                 ) : (
