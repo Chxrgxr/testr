@@ -1,0 +1,30 @@
+{
+  "result": {
+    "totalPages": 1,
+    "scripts": [
+      {
+        "_id": "61e34c14db8d0cfb425179e5",
+        "title": "Vape V4  [Anticheat Bypass]  [Kill Aura] [Fly]",
+        "game": {
+          "gameId": 6872265039,
+          "name": "BedWars 🎄 [SEASON 3!]",
+          "imageUrl": "https://tr.rbxcdn.com/563acb45a422f32b2bbaa337ace062bf/500/280/Image/Jpeg"
+        },
+        "slug": "Vape-V4-For-Roblox_316",
+        "verified": true,
+        "views": 368999,
+        "scriptType": "free",
+        "isUniversal": false,
+        "isPatched": false,
+        "visibility": "public",
+        "rawCount": 0,
+        "showRawCount": false,
+        "createdAt": "2022-01-15T22:35:00.526Z",
+        "updatedAt": "2024-07-16T08:15:24.028Z",
+        "__v": 0,
+        "script": "loadstring(game:HttpGet(\"https://scriptblox.com/raw/Vape-V4-For-Roblox_316\"))()",
+        "matched": ["features", "game", "tags"]
+      }
+    ]
+  }
+}
