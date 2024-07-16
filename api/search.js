@@ -31,7 +31,7 @@ module.exports = async (req, res) => {
         });
 
         // Return results as JSON
-        res.status(200).json({ results });
+        res.status(200).json({ result: { scripts: results } });
     } catch (error) {
         console.error('Error searching JSON files:', error);
         res.status(500).json({ error: 'Internal Server Error' });
